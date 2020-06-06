@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 int main(int argc, char *argv[])
 {
@@ -11,7 +10,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    //open card.raw and assign pointer to it
+    //open card.raw for reading and assign pointer to it
     FILE *mem_card = fopen(argv[1], "r");
 
     //if something goes wrong
@@ -22,7 +21,7 @@ int main(int argc, char *argv[])
         return 2;
     }
 
-    //temp byte storage //ensure everything is positive, could also use uint_8t here (a type of unsigned integer of length 8 bits)
+    //temp 512 byte storage //ensure everything is positive, could also use uint_8t here (a type of unsigned integer of length 8 bits)
     unsigned char buffer[512];
     //temp filename storage as we move through card.raw
     char filename[8];
@@ -49,7 +48,7 @@ int main(int argc, char *argv[])
             fwrite(buffer, 512, 1, img);
             count++;
         }
-        //write whenwver no new header is found, has condition of count > 0 to ensure it only writes after the first header is found
+        //write whenwver no new header is found, has condition of count > 0 so it only writes after the first header is found
         else if(count > 0)
             fwrite(buffer, 512, 1, img);
     }
